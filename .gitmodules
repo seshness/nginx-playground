@@ -2,3 +2,6 @@
 	path = nginx
 	url = git@github.com:seshness/nginx.git
 	branch = wasm-playground
+[submodule "pcre"]
+	path = pcre
+	url = git@github.com:seshness/pcre.git
