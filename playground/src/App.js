@@ -1,30 +1,45 @@
 import "./App.css";
 
-import { Box, Flex, Heading, Text } from "rebass";
+import { Box, Button, Divider, Flex, Heading, Text } from "theme-ui";
 import Theme from "./theme";
 import Editor from "./editor";
+import Console from './console';
 
 function App() {
   return (
     <Theme>
-      <Flex className="App" flexDirection="column" height="100vh">
-        <Flex pl="10px" color="#e1e1e1" bg="#1e1e1e" height="48px" flexDirection="column">
+      <Flex className="App" sx={{ flexDirection: "column", height: "100vh" }}>
+        <Flex
+          pl="10px"
+          sx={{ alignItems: "center" }}
+        >
+          <Flex sx={{ flexDirection: "column" }}>
+            <Box>
+              <Heading>Nginx playground</Heading>
+            </Box>
+            <Box color="#e1e1e1" bg="#1e1e1e">
+              <Text fontFamily="monospace">nginx.conf</Text>
+            </Box>
+          </Flex>
+          <Flex sx={{ flex: "1 1 auto" }} />
           <Box>
-            <Heading>Nginx playground</Heading>
-          </Box>
-          <Box color="#e1e1e1" bg="#1e1e1e">
-            <Text fontFamily='monospace'>nginx.conf</Text>
+            <Button variant="primary" mr={2}>
+              Run
+            </Button>
           </Box>
         </Flex>
-        <Flex mx={-2} flex={1}>
-          <Box width={1 / 2} px={2}>
+        <Divider />
+        <Flex mx={-2} sx={{ flex: 1, alignItems: "stretch" }}>
+          <Box px={2} sx={{ flex: 1 }}>
             <Editor />
           </Box>
-          <Box width={1 / 2} px={2}>
-            <Text p={1} color="background" bg="primary">
-              Half
-            </Text>
-          </Box>
+          <Flex sx={{ flex: 1, flexDirection: 'column' }}>
+            <Flex sx={{ flex: '1 1 auto' }} />
+            <Divider mx={-4} />
+            <Box sx={{ borderTop: '1px ', flex: '1 1 auto' }}>
+              <Console />
+            </Box>
+          </Flex>
         </Flex>
       </Flex>
     </Theme>
