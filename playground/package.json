@@ -92,8 +92,9 @@
     ]
   },
   "devDependencies": {
-    "@monaco-editor/react": "^4.3.1",
+    "monaco-editor": "^0.28.1",
     "monaco-editor-nginx": "^1.0.9",
+    "monaco-editor-webpack-plugin": "^5.0.0",
     "rebass": "^4.0.7"
   },
   "jest": {
