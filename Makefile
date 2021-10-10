@@ -1,3 +1,5 @@
+unexport EM_CONFIG
+
 .PHONY: emsdk
 emsdk:
 	emsdk/emsdk install 2.0.31
