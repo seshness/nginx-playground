@@ -92,6 +92,8 @@
     ]
   },
   "devDependencies": {
+    "@emotion/react": "^11.4.1",
+    "@rebass/preset": "^4.0.5",
     "monaco-editor": "^0.28.1",
     "monaco-editor-nginx": "^1.0.9",
     "monaco-editor-webpack-plugin": "^5.0.0",

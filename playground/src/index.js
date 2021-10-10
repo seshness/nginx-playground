@@ -15,3 +15,21 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+/*global globalThis*/
+globalThis.nginx({
+  print: console.log,
+  printErr: function(...args) {
+    console.warn(...args);
+  },
+  noInitialRun: true,
+  onRuntimeInitialized() {
+    this.callMain(['-v'])
+  },
+  onAbort() {
+    console.log('nginx aborted')
+  },
+  onExit() {
+    console.log('nginx exited')
+  },
+});

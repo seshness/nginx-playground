@@ -34,5 +34,14 @@ export default function Editor() {
     });
   }, []);
 
-  return <div style={{ height: '100%', resize: 'vertical', overflow: "auto" }} ref={refContainer} />;
+  return (
+    <div
+      style={{
+        height: "100%",
+        resize: "vertical",
+        overflow: "auto",
+      }}
+      ref={refContainer}
+    />
+  );
 }
