@@ -1,0 +1,10 @@
+import os
+import subprocess
+git_root = subprocess.check_output(['git', 'rev-parse', '--show-superproject-working-tree'], text=True).strip()
+emsdk_path = os.path.join(git_root, 'emsdk')
+NODE_JS = emsdk_path + '/node/14.15.5_64bit/bin/node'
+PYTHON = emsdk_path + '/python/3.9.2-1_64bit/bin/python3'
+LLVM_ROOT = emsdk_path + '/upstream/bin'
+BINARYEN_ROOT = emsdk_path + '/upstream'
+COMPILER_ENGINE = NODE_JS
+JS_ENGINES = [NODE_JS]

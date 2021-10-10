@@ -5,3 +5,10 @@
 [submodule "pcre"]
 	path = pcre
 	url = git@github.com:seshness/pcre.git
+[submodule "emscripten"]
+	path = emscripten
+	url = git@github.com:seshness/emscripten.git
+	branch = vsockfs
+[submodule "emsdk"]
+	path = emsdk
+	url = git@github.com:emscripten-core/emsdk.git
