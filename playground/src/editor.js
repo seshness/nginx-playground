@@ -21,18 +21,19 @@ http {
   }
 }`;
 
-export default function Editor() {
+export default function Editor({ monacoRef }) {
   const refContainer = useRef(null);
 
   useEffect(() => {
-    monaco.editor.create(refContainer.current, {
+    const editorRef = monaco.editor.create(refContainer.current, {
       automaticLayout: true,
       value: defaultNginxSample,
       language: "nginx",
       rulers: [80],
       theme: "nginx-theme",
     });
-  }, []);
+    monacoRef.current = editorRef;
+  }, [monacoRef]);
 
   return (
     <div

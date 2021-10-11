@@ -1,18 +1,48 @@
 import "./App.css";
 
+import { useRef, useState } from "react";
+
 import { Box, Button, Divider, Flex, Heading, Text } from "theme-ui";
 import Theme from "./theme";
 import Editor from "./editor";
-import Console from './console';
+import Console from "./console";
+import runNginx from "./nginx";
 
+let consoleOutput = [];
 function App() {
+  const [consoleOutputCount, setConsoleOutputCount] = useState([]);
+  const [nginxProcess, setNginxProcess] = useState(false);
+  const monacoRef = useRef(null);
+
+  function writeToConsole(message) {
+    consoleOutput.push(message);
+    setConsoleOutputCount(consoleOutput.length);
+  }
+  function clearConsole() {
+    consoleOutput = [];
+    setConsoleOutputCount(0);
+  }
+
+  function handleRun() {
+    clearConsole();
+    const nginxConf = monacoRef.current.getValue();
+    const np = runNginx({
+      nginxConf,
+      writeToConsole,
+      onExit() {
+        setNginxProcess(null);
+      },
+      onAbort() {
+        setNginxProcess(null);
+      },
+    });
+    setNginxProcess(np);
+  }
+
   return (
     <Theme>
       <Flex className="App" sx={{ flexDirection: "column", height: "100vh" }}>
-        <Flex
-          pl="10px"
-          sx={{ alignItems: "center" }}
-        >
+        <Flex pl="10px" sx={{ alignItems: "center" }}>
           <Flex sx={{ flexDirection: "column" }}>
             <Box>
               <Heading>Nginx playground</Heading>
@@ -23,7 +53,12 @@ function App() {
           </Flex>
           <Flex sx={{ flex: "1 1 auto" }} />
           <Box>
-            <Button variant="primary" mr={2}>
+            <Button
+              variant="primary"
+              mr={2}
+              onClick={handleRun}
+              disabled={!!nginxProcess}
+            >
               Run
             </Button>
           </Box>
@@ -31,13 +66,16 @@ function App() {
         <Divider />
         <Flex mx={-2} sx={{ flex: 1, alignItems: "stretch" }}>
           <Box px={2} sx={{ flex: 1 }}>
-            <Editor />
+            <Editor monacoRef={monacoRef} />
           </Box>
-          <Flex sx={{ flex: 1, flexDirection: 'column' }}>
-            <Flex sx={{ flex: '1 1 auto' }} />
+          <Flex sx={{ flex: 1, flexDirection: "column" }}>
+            <Flex sx={{ flex: "1 1 0px" }} />
             <Divider mx={-4} />
-            <Box sx={{ borderTop: '1px ', flex: '1 1 auto' }}>
-              <Console />
+            <Box sx={{ flex: "1 1 0px", overflow: "hidden" }}>
+              <Console
+                consoleOutput={consoleOutput}
+                consoleOutputCount={consoleOutputCount}
+              />
             </Box>
           </Flex>
         </Flex>
