@@ -12,3 +12,7 @@
 [submodule "emsdk"]
 	path = emsdk
 	url = git@github.com:emscripten-core/emsdk.git
+[submodule "curl"]
+	path = curl
+	url = git@github.com:seshness/curl.git
+	branch = wasm
