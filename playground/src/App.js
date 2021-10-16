@@ -7,11 +7,13 @@ import Theme from "./theme";
 import Editor from "./editor";
 import Console from "./console";
 import runNginx from "./nginx";
+import runCurl from "./curl";
 
 let consoleOutput = [];
 function App() {
   const [consoleOutputCount, setConsoleOutputCount] = useState([]);
   const [nginxProcess, setNginxProcess] = useState(false);
+  const [curlProcess, setCurlProcess] = useState(false);
   const monacoRef = useRef(null);
 
   function writeToConsole(message) {
@@ -37,6 +39,18 @@ function App() {
       },
     });
     setNginxProcess(np);
+  }
+
+  function handleRunCurl() {
+    const cp = runCurl({
+      onExit() {
+        setCurlProcess(null);
+      },
+      onAbort() {
+        setCurlProcess(null);
+      }
+    });
+    setCurlProcess(cp);
   }
 
   return (
@@ -69,7 +83,17 @@ function App() {
             <Editor monacoRef={monacoRef} />
           </Box>
           <Flex sx={{ flex: 1, flexDirection: "column" }}>
-            <Flex sx={{ flex: "1 1 0px" }} />
+            <Flex sx={{ flex: "1 1 0px" }}>
+              <Box>
+                <Button
+                  variant="secondary"
+                  onClick={handleRunCurl}
+                  disabled={!!curlProcess}
+                >
+                  Run curl
+                </Button>
+              </Box>
+            </Flex>
             <Divider mx={-4} />
             <Box sx={{ flex: "1 1 0px", overflow: "hidden" }}>
               <Console

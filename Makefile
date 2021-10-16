@@ -32,7 +32,7 @@ curl-configure-release:
 
 .PHONY: curl-configure
 curl-configure:
-	cd curl && ../emscripten/emconfigure ./configure --host wasm32 --disable-threaded-resolver --without-ssl --disable-shared --without-libpsl --disable-netrc --disable-crypto-auth --disable-proxy --disable-unix-sockets --disable-versioned-symbols --enable-hidden-symbols --without-libidn --without-librtmp --without-zlib --disable-thread --disable-ipv6 --disable-tftp --disable-ntlm-wb --prefix=$(CURDIR)/curl/install --with-ld-opt="-g $(RELEASE_FLAGS) -s VERBOSE -s WASM=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s EXPORTED_RUNTIME_METHODS=ccall,cwrap,callMain,FS,abort -s FORCE_FILESYSTEM=1 -s SOCKET_DEBUG=1 -s ASYNCIFY -s ASYNCIFY_IMPORTS=__sys_poll -s MODULARIZE=1 -s EXPORT_NAME=curl -s EXIT_RUNTIME=1 -s SYSCALL_DEBUG=1 --extern-post-js ../auto-run-curl-in-node.js"
+	cd curl && ../emscripten/emconfigure env LDFLAGS="-g $(RELEASE_FLAGS) -s VERBOSE -s WASM=1 -s EXPORTED_RUNTIME_METHODS=ccall,cwrap,callMain,FS,abort -s FORCE_FILESYSTEM=1 -s SOCKET_DEBUG=1 -s ASYNCIFY -s ASYNCIFY_IMPORTS=__sys_poll -s MODULARIZE=1 -s EXPORT_NAME=curl -s EXIT_RUNTIME=1 -s SYSCALL_DEBUG=1 --extern-post-js $(CURDIR)/auto-run-curl-in-node.js" ./configure --host wasm32 --enable-debug --disable-threaded-resolver --disable-alt-svc --without-ssl --disable-shared --without-libpsl --without-libgsasl --disable-netrc --disable-crypto-auth --disable-proxy --disable-unix-sockets --disable-versioned-symbols --enable-hidden-symbols --without-libidn --without-librtmp --without-zlib --disable-thread --disable-ipv6 --disable-tftp --disable-ntlm-wb --prefix=$(CURDIR)/curl/install
 
 .PHONY: curl-build
 curl-build:
